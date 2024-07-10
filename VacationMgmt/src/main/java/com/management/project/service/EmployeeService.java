@@ -3,6 +3,7 @@
  */
 package com.management.project.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,21 +15,18 @@ import com.management.project.model.Request;
  */
 public interface EmployeeService {
 
-	public Employee addEmployee(Employee emp);
-	
-	public String removeEmployee(int empId);
-	
-	public Optional<Employee> findEmployeeById(int EmpId);
-	
-	public String updateEmployee(Employee emp);
-	
-	public List<Employee> getAllEmployeesByManagerId(int managerId);
-	
+	/* Operations for all employees */	
 	public List<Request> getEmployeeRequestList(int empId, String status);
 	
 	public String addRequestForEmployee(Employee emp, Request req);
 	
-	public List<Request> getAllRequestsAssignedToMe(int empId);
+	public Request createRequestForEmployee(Employee emp, Date startDate, Date endDate);
 	
-	public String approveRequest(int reqId, String status);
+	
+	/* Operations for manager */
+	public List<Request> getAllRequestsAssignedToMe(int empId, String status);
+	
+	public Request approveRejectRequest(int reqId, String status, int managerId);
+	
+	public List<Request> getAllOverlappingRequests(int managerId);
 }

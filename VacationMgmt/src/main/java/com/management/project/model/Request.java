@@ -18,6 +18,7 @@ public class Request {
 	
 	private int resolvedBy;
 	
+	//This can be "Approved, Pending or Rejected"
 	private String status;
 	
 	private Date createDate;
@@ -25,6 +26,10 @@ public class Request {
 	private Date startDate;
 	
 	private Date endDate;
+	
+	public Request() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public int getReqId() {
 		return reqId;
