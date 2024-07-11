@@ -56,29 +56,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return failure;
 	}
 	
-	private int getDifferenceInStartEndDates(Date d1, Date d2) {
-		Date startDate = d1;
-		Date endDate = d2;
-		LocalDate sdate = LocalDate.ofInstant(startDate.toInstant(), ZoneId.systemDefault());
-		LocalDate edate = LocalDate.ofInstant(endDate.toInstant(), ZoneId.systemDefault());
-		int days =  Period.between(sdate, edate).getDays();
-		return days;
-	}
-	
-	private boolean employeeHasVacayLeft(Employee emp, Request req) {
-		int days =  getDifferenceInStartEndDates(req.getStartDate(), req.getEndDate());
-		if (emp.getVacationDays() > 0 && emp.getVacationDays() >= days) return true;
-		return false;
-	}
-
-	private boolean validateRequest(Request req) {
-	// start date to be before end date otherwise invalid request
-		if(req.getStartDate().compareTo(req.getEndDate()) > 0) {
-			return false;
-		}		
-		return true;
-	}
-
 	@Override
 	public List<Request> getAllRequestsAssignedToMe(int empId, String status) {
 		List<Request> reqList = requestRepo.findAll().stream()
@@ -157,6 +134,29 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return r;
 	}
 
+	//Helper Methods
 	
+	private int getDifferenceInStartEndDates(Date d1, Date d2) {
+		Date startDate = d1;
+		Date endDate = d2;
+		LocalDate sdate = LocalDate.ofInstant(startDate.toInstant(), ZoneId.systemDefault());
+		LocalDate edate = LocalDate.ofInstant(endDate.toInstant(), ZoneId.systemDefault());
+		int days =  Period.between(sdate, edate).getDays();
+		return days;
+	}
+	
+	private boolean employeeHasVacayLeft(Employee emp, Request req) {
+		int days =  getDifferenceInStartEndDates(req.getStartDate(), req.getEndDate());
+		if (emp.getVacationDays() > 0 && emp.getVacationDays() >= days) return true;
+		return false;
+	}
+
+	private boolean validateRequest(Request req) {
+	// start date to be before end date otherwise invalid request
+		if(req.getStartDate().compareTo(req.getEndDate()) > 0) {
+			return false;
+		}		
+		return true;
+	}
 
 }
